@@ -3,12 +3,11 @@
 const Alpha = 1.75;
 
 class deque {
-	constructor(length = undefined) {
+	constructor(length = 0) {
 		this.head = this.tail = 0;
-		if (length === undefined) length = 0;
 		this.stor = length, this.data = new Array(this.stor);
 	}
-	prev(idx) {return (idx - 1) % this.stor;}
+	prev(idx) {return (this.stor + idx - 1) % this.stor;}
 	next(idx) {return (idx + 1) % this.stor;}
 	size() {
 		if (this.stor === 0) return 0;
@@ -37,7 +36,8 @@ class deque {
 		this.chk_stor(); this.data[this.head = this.prev(this.head)] = x;
 	}
 	push_back(x) {
-		this.chk_stor(); this.data[this.tail = this.next(this.tail)] = x;
+		this.chk_stor(); this.data[this.tail] = x;
+		this.tail = this.next(this.tail);
 	}
 }
 
