@@ -15,7 +15,6 @@ class deque {
 	}
 	empty() {return this.tail === this.head;}
 	reserve(length) {
-		console.log(`RESERVE: ${length}`);
 		let t = new Array(length), idx = 0;
 		while (!this.empty()) t[idx++] = this.front(), this.pop_front();
 		this.head = 0, this.tail = idx, this.stor = length, this.data = t;
@@ -29,11 +28,18 @@ class deque {
 		}
 	}
 	front() {this.chk_empty(); return this.data[this.head];}
-	back() {this.chk_empty(); return this.data[this.tail];}
-	pop_front() {this.chk_empty(); this.head = this.next(this.head);}
-	pop_back() {this.chk_empty(); this.tail = this.prev(this.tail);}
+	back() {this.chk_empty(); return this.data[this.prev(this.tail)];}
+	pop_front() {
+		this.chk_empty(); this.data[this.head] = undefined;
+		this.head = this.next(this.head);
+	}
+	pop_back() {
+		this.chk_empty();
+		this.data[this.tail = this.prev(this.tail)] = undefined;
+	}
 	push_front(x) {
-		this.chk_stor(); this.data[this.head = this.prev(this.head)] = x;
+		this.chk_stor();
+		this.data[this.head = this.prev(this.head)] = x;
 	}
 	push_back(x) {
 		this.chk_stor(); this.data[this.tail] = x;
